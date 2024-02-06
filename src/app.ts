@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction} from 'express';
+import express from 'express';
 import cors from 'cors';
 import { db_connection } from './db/conn';
 import { loginRoute, signupRoute } from './routes/routes';
@@ -6,11 +6,12 @@ import { errHandlerMiddleware } from './middleware/errMidleware';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: process.cwd() + '.env'});
 
+db_connection.on('error', (error) => console.log(`Erro: ${error}`));
+db_connection.once('open', () => console.log('Conexão com o mongoDB estabilizada'));
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-db_connection.on('error', (error) => console.log(`Erro: ${error}`));
-db_connection.once('open', () => console.log('Conexão com o mongoDB estabilizada'));
 app.use(loginRoute);
 app.use(signupRoute);
 app.use(errHandlerMiddleware);

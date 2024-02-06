@@ -1,6 +1,6 @@
 declare namespace NodeJS {
     interface ProcessEnv {
         DB_CONNECTION_STRING: string,
-        PORT: number
+        API_PORT: number
     }
 }
