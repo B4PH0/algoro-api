@@ -1,6 +1,6 @@
 import mongoose, { Connection} from 'mongoose';
-import * as dotenv from 'dotenv';
-dotenv.config({ path: process.cwd() + '/.env'});
+import dotenv from 'dotenv';
+dotenv.config();
 
 mongoose.connect(`${process.env.DB_CONNECTION_STRING}`);
 const db_connection: Connection = mongoose.connection;
