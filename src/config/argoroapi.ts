@@ -1,38 +1,42 @@
-import express, { Router } from "express";
+import express, { Router, Express } from "express";
 import cors from 'cors';
+import morgan from 'morgan';
 import { db_connection } from "../db/conn";
 import { LoginUsersController } from "../controllers/LoginController";
 import { SignupController } from "../controllers/SignupController";
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config();    
 
-export class Argoroapi {
-    private connectingDB(): void {
-        db_connection.on('error', (error) => console.log(`New Error: ${error}`));
-        db_connection.once('open', () => console.log('MongoDB connection estabilished.'));
-    }; 
+export default new class AlgoroAPI {
+    private app: express.Application
 
-    private loginroute(): Router {
-        const router: Router = Router();
-        return router.post('/api/users/login', LoginUsersController);
-    };
-    
-    private signupRoute(): Router {
-        const router: Router = Router();
-        return router.post('/api/users/signup', SignupController);
+    constructor() {
+        this.app = express();
+        this.setup();
     };
 
-    public start() {
-        const app = express();
+    private setup(): void {
+        this.app.use(express.json());
+        this.app.use(cors());
 
-        app.use(cors());
-        app.use(express.json());
+        this.DBConnection();
 
-        this.connectingDB();
+        this.app.use(morgan('dev'));
 
-        app.use(this.loginroute);
-        app.use(this.signupRoute);
+        this.setupRoutes();
+    }
 
-        app.listen(process.env.API_PORT, () => console.log(`API running in: http://localhost:${process.env.API_PORT}`));
+    private DBConnection(): void {
+        db_connection.on('error', (erro) => console.error(`New error: ${erro}`));
+        db_connection.once('open', () => console.log('MongoDB connection estabilished'));
     };
-};
+
+    private setupRoutes(): void {
+        this.app.post('/api/users/login', LoginUsersController);
+        this.app.post('/api/users/signup', SignupController);
+    };
+
+    public start(): void {
+        this.app.listen(process.env.API_PORT, () => console.log(`API running in: http://localhost:${process.env.API_PORT}/api/users`));
+    }
+}
