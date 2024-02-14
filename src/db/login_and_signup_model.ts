@@ -1,9 +1,18 @@
 import mongoose from 'mongoose';
 
 const modelLoginAndSignup = new mongoose.Schema({
-    name: String,
-    email: String,
-    password_hash: String,
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    password_hash: {
+        type: String,
+        required: true
+    },
 }, { timestamps: true });
 
 const LoginAndSignupModel = mongoose.model('users', modelLoginAndSignup);
