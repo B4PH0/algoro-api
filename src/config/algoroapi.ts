@@ -1,14 +1,15 @@
-import express, { Router } from "express";
+import express, { Request, Response } from "express";
 import cors from 'cors';
+import cookieparser from 'cookie-parser';
 import morgan from 'morgan';
 import { db_connection } from "../db/conn";
 import { LoginController } from "../controllers/LoginController";
 import { SignupController } from "../controllers/SignupController";
-import checkToken from './checkToken'
-import dotenv from 'dotenv';
-dotenv.config();
+import checkToken from '../function/checkToken'
+import { config } from 'dotenv';
+config();
 
-export class AlgoroApi {
+export default new class AlgoroApi {
     private app: express.Application
 
     constructor() {
@@ -19,6 +20,8 @@ export class AlgoroApi {
     private setup(): void {
         this.app.use(express.json());
         this.app.use(cors());
+        this.app.use(cookieparser());
+        this.app.use(express.urlencoded({ extended: true }));
         this.app.use(morgan('dev'));
         this.setupRoutes();
     };
@@ -31,7 +34,9 @@ export class AlgoroApi {
     private setupRoutes(): void {
         this.app.post('/api/users/login', LoginController);
         this.app.post('/api/users/signup', SignupController);
-        
+        this.app.get('/test', checkToken, (req: Request, res: Response) => {
+            return res.json({ msg: `Welcome ${req.body.name} to your private route!!` });
+        });
     };
 
     public start(): void {

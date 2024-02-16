@@ -1,4 +1,3 @@
-import { AlgoroApi } from "./config/algoroapi";
+import algoroapi from './config/algoroapi';
 
-const app = new AlgoroApi();
-app.start();
+algoroapi.start();

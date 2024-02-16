@@ -1,4 +1,4 @@
 node_modules
 package-lock.json
 env_keys.d.ts
-.env
+request.http
