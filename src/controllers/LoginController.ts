@@ -1,5 +1,4 @@
 import { Response, Request, NextFunction} from 'express';
-import cookieparser from 'cookie-parser';
 import { LoginAndSignupModel } from '../db/login_and_signup_model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
