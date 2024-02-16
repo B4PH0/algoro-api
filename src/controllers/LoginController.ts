@@ -6,8 +6,8 @@ import jwt from 'jsonwebtoken';
 
 export async function LoginController(req: Request, res: Response, next: NextFunction) {
     const { email, password_hash } = req.body;
-    if (!email) return res.status(422).json({ error: 'Undefined email, please provide one.'});
-    if (!password_hash) return res.status(422).json({ error: 'Undefined password, please provide one'});
+    if (!email) return res.status(422).json({ status: 422, error: 'Undefined email, please provide one.'});
+    if (!password_hash) return res.status(422).json({ status: 422, error: 'Undefined password, please provide one'});
 
     const userEmail = await LoginAndSignupModel.findOne({ email: email });
 
@@ -24,5 +24,5 @@ export async function LoginController(req: Request, res: Response, next: NextFun
         } catch (err) {
             return res.status(500).json({ status: 500, error: "Server internal error" });
         };
-    } else return res.status(404).json({ status: 500, error: 'Email not found, please try another email.'});
+    } else return res.status(422).json({ status: 422, error: 'Email not found, please try another email.'});
 };
