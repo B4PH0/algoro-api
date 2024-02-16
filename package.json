@@ -1,13 +1,13 @@
 {
   "name": "algoro-api",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Basic API for user login and registration with authentication and authorization by TOKENS",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts"
   },
   "keywords": [],
   "author": "B4PH0",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.6",

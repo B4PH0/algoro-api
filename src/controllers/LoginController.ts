@@ -19,10 +19,10 @@ export async function LoginController(req: Request, res: Response, next: NextFun
         try {
             const token = jwt.sign({ id: userEmail._id, name: userEmail.name }, process.env.SECRET_HASH, { expiresIn: '1h'});
             res.cookie('token', token, { httpOnly: true });
-            return res.status(200).json({ msg: 'Succesfull authorization realized'});
+            return res.status(200).json({ status: 200, message: 'Authorization made'});
             next();
         } catch (err) {
-            return res.status(500).json({ error: "Server internal error" });
+            return res.status(500).json({ status: 500, error: "Server internal error" });
         };
-    } else return res.status(404).json({ error: 'Email not found, please try another email.'});
+    } else return res.status(404).json({ status: 500, error: 'Email not found, please try another email.'});
 };

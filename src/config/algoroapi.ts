@@ -34,8 +34,8 @@ export default new class AlgoroApi {
     private setupRoutes(): void {
         this.app.post('/api/users/login', LoginController);
         this.app.post('/api/users/signup', SignupController);
-        this.app.get('/test', checkToken, (req: Request, res: Response) => {
-            return res.json({ msg: `Welcome ${req.body.name} to your private route!!` });
+        this.app.get('/private', checkToken, (req: Request, res: Response) => {
+            return res.json({ message: `Welcome ${req.body.name} to your private route!!` });
         });
     };
 
